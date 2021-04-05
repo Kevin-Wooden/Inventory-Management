@@ -11,11 +11,24 @@ char answer1;
 char answer2;
 char Fruits[5][15] = { "Watermelons", "Kiwis", "Strawberries", "Pineapples", "Blueberries" };
 int Fruit_inv[5] = { 100, 200, 400, 250, 400 };
+struct Fruits { //Create the Structure for each fruit and the associated variables
+    int startingvalue;
+    char answer;
+    int amountsold;
+    int remaining;
+    int replenished;
+
+};
 int Watermelonsreturn();
 int Kiwisreturn();
 int Strawberriesreturn();
 int Pineapplesreturn();
 int Blueberriesreturn();
+struct Fruits Watermelon;
+struct Fruits Kiwi;
+struct Fruits Strawberry;
+struct Fruits Pineapple;
+struct Fruits Blueberry;
 
 int main() //Define function
 {
@@ -32,9 +45,9 @@ int main() //Define function
         if (answer1 != 'Y') { //Determine if answer is Y
             break;
         }
-        printf("What inventory do you want to track? Watermelons, Kiwis, Strawberries, Pineapples, or Blueberries?\n");
+        printf("What inventory do you want to track? Watermelons, Kiwis, Strawberries, Pineapples, or Blueberries?\n"); //Ask user what inventory the user wants to track.
         char test[15];
-        scanf("%s", test);
+        scanf("%s", test); //Depending upon the users answer will initiate the respective inventory management item.
         if (strcmp(w, test) == 0) {
             printf("Were Watermelons sold? Answer Y or N\n");
             scanf("%s", &answer2);
@@ -71,137 +84,143 @@ int main() //Define function
 
 
 int Watermelonsreturn() {
-    int StartingWatermelon = Fruit_inv[0];
-    int amountSold; //Define variables used to track and adjust inventory values.
-    int remaining;
-    int amountReplenished;
+    Watermelon.startingvalue = Fruit_inv[0]; //Define variables used to track and adjust inventory values.
     if (answer2 == 'Y') {
         printf("Today is day %d of tracking watermelon inventory.\n", count);
         count++; //Add to the daily counter
-        printf(Starting_MSG); //Give user initial value of watermelons
+        printf(Starting_MSG); //Give uesr initial value of watermelons
         printf(Sold_MSG); //Ask user for how many watermelons were sold
-        scanf("%d", &amountSold); //Scan for value of watermelons sold
-        remaining = StartingWatermelon - amountSold; //Determine remaining watermelons
-        printf("The remaining amount of watermelons is %d\n", remaining); //Display remaining watermelon inventory
-        StartingWatermelon = remaining;
-        if (remaining < 25) { //If watermelon inventory is below 25, ask to replenish inventory.
+        scanf("%d", &Watermelon.amountsold); //Scan for value of watermelons sold
+        Watermelon.remaining = Watermelon.startingvalue - Watermelon.amountsold; //Determine remaining watermelons
+        printf("Do you want to print the remaining amount of Watermelonss? Y or N\n");
+        scanf("%s", &Watermelon.answer);
+        if (strcmp("Y", &Watermelon.answer) == 0) {
+            printf("The remaining amount of Watermelons is %d\n", Watermelon.remaining); //Display remaining watermelon inventory
+        }
+        Watermelon.startingvalue = Watermelon.remaining;
+        if (Watermelon.remaining < 25) { //If watermelon inventory is below 25, ask to replenish inventory.
             printf("You need to replenish the inventory.\n"); //Tell user they need to replenish inventory
             printf("Input how many watermelons to replenish: \n"); //Ask user for how many watermelons to replenish
-            scanf("%d", &amountReplenished); //Scan for user replenish value
-            StartingWatermelon = amountReplenished + remaining; //Calculate the new starting value
-            printf("There are now %d watermelons in stock\n", StartingWatermelon); //List the new starting inventory for the next day
+            scanf("%d", &Watermelon.replenished); //Scan for user replenish value
+            Watermelon.startingvalue = Watermelon.replenished + Watermelon.remaining; //Calculate the new starting value
+            printf("There are now %d watermelons in stock\n", Watermelon.startingvalue); //List the new starting inventory for the next day
         }
     }
-    Fruit_inv[0] = StartingWatermelon;
+    Fruit_inv[0] = Watermelon.startingvalue;
     printf("Do you want to document tomorrows sales? Answer Y or N\n"); //Ask user if they want to restart the loop and document the next day's sales.
     scanf("%c", &answer1);
     return 0;
 }
 int Kiwisreturn() {
-    int StartingKiwi = Fruit_inv[1];
-    int amountSold2; //Define variables used to track and adjust inventory values.
-    int remaining2;
-    int amountReplenished2;
+    Kiwi.startingvalue = Fruit_inv[1]; //Define variables used to track and adjust inventory values.
     if (answer2 == 'Y') {
         printf("Today is day %d of tracking Kiwi inventory.\n", count);
         count++; //Add to the daily counter
-        printf(Starting_MSG1); //Give uesr initial value of Kiwis
+        printf(Starting_MSG1); //Give user initial value of watermelons
         printf(Sold_MSG1); //Ask user for how many Kiwis were sold
-        scanf("%d", &amountSold2); //Scan for value of Kiwis sold
-        remaining2 = StartingKiwi - amountSold2; //Determine remaining Kiwis
-        printf("The remaining amount of Kiwis is %d\n", remaining2); //Display remaining Kiwi inventory
-        StartingKiwi = remaining2;
-        if (remaining2 < 25) { //If Kiwi inventory is below 25, ask to replenish inventory.
+        scanf("%d", &Kiwi.amountsold); //Scan for value of watermelons sold
+        Kiwi.remaining = Kiwi.startingvalue - Kiwi.amountsold; //Determine remaining Kiwis
+        printf("Do you want to print the remaining amount of Kiwis? Y or N\n");
+        scanf("%s", &Kiwi.answer);
+        if (strcmp("Y", &Kiwi.answer) == 0) {
+            printf("The remaining amount of Kiwis is %d\n", Kiwi.remaining); //Display remaining Kiwi inventory
+        }
+        Kiwi.startingvalue = Kiwi.remaining;
+        if (Kiwi.remaining < 25) { //If Kiwi inventory is below 25, ask to replenish inventory.
             printf("You need to replenish the inventory.\n"); //Tell user they need to replenish inventory
             printf("Input how many Kiwis to replenish: \n"); //Ask user for how many Kiwis to replenish
-            scanf("%d", &amountReplenished2); //Scan for user replenish value
-            StartingKiwi = amountReplenished2 + remaining2; //Calculate the new starting value
-            printf("There are now %d Kiwis in stock\n", StartingKiwi); //List the new starting inventory for the next day
+            scanf("%d", &Kiwi.replenished); //Scan for user replenish value
+            Kiwi.startingvalue = Kiwi.replenished + Kiwi.remaining; //Calculate the new starting value
+            printf("There are now %d Kiwis in stock\n", Kiwi.startingvalue); //List the new starting inventory for the next day
         }
     }
     printf("Do you want to document tomorrows sales? Answer Y or N\n"); //Ask user if they want to restart the loop and document the next day's sales.
     scanf("%c", &answer1);
-    Fruit_inv[1] = StartingKiwi;
+    Fruit_inv[1] = Kiwi.startingvalue;
     return 0;
 }
+
 int Strawberriesreturn() {
-    int StartingStrawberry = Fruit_inv[2];
-    int amountSold2; //Define variables used to track and adjust inventory values.
-    int remaining2;
-    int amountReplenished2;
+    Strawberry.startingvalue = Fruit_inv[2]; //Define variables used to track and adjust inventory values.
     if (answer2 == 'Y') {
         printf("Today is day %d of tracking Strawberry inventory.\n", count);
         count++; //Add to the daily counter
         printf(Starting_MSG2); //Give user initial value of Strawberries
         printf(Sold_MSG2); //Ask user for how many Strawberries were sold
-        scanf("%d", &amountSold2); //Scan for value of Strawberries sold
-        remaining2 = StartingStrawberry - amountSold2; //Determine remaining Strawberries
-        printf("The remaining amount of Strawberries is %d\n", remaining2); //Display remaining Strawberry inventory
-        StartingStrawberry = remaining2;
-        if (remaining2 < 25) { //If Strawberry inventory is below 25, ask to replenish inventory.
+        scanf("%d", &Strawberry.amountsold); //Scan for value of Strawberries sold
+        Strawberry.remaining = Strawberry.startingvalue - Strawberry.amountsold; //Determine remaining Strawberries
+        printf("Do you want to print the remaining amount of Strawberries? Y or N\n");
+        scanf("%s", &Strawberry.answer);
+        if (strcmp("Y", &Strawberry.answer) == 0) {
+            printf("The remaining amount of Strawberries is %d\n", Strawberry.remaining); //Display remaining Strawberries inventory
+        }
+        Strawberry.startingvalue = Strawberry.remaining;
+        if (Strawberry.remaining < 25) { //If Strawberries inventory is below 25, ask to replenish inventory.
             printf("You need to replenish the inventory.\n"); //Tell user they need to replenish inventory
             printf("Input how many Strawberries to replenish: \n"); //Ask user for how many Strawberries to replenish
-            scanf("%d", &amountReplenished2); //Scan for user replenish value
-            StartingStrawberry = amountReplenished2 + remaining2; //Calculate the new starting value
-            printf("There are now %d Strawberries in stock\n", StartingStrawberry); //List the new starting inventory for the next day
+            scanf("%d", &Strawberry.replenished); //Scan for user replenish value
+            Strawberry.startingvalue = Strawberry.replenished + Strawberry.remaining; //Calculate the new starting value
+            printf("There are now %d Strawberries in stock\n", Strawberry.startingvalue); //List the new starting inventory for the next day
         }
     }
     printf("Do you want to document tomorrows sales? Answer Y or N\n"); //Ask user if they want to restart the loop and document the next day's sales.
     scanf("%c", &answer1);
-    Fruit_inv[2] = StartingStrawberry;
+    Fruit_inv[2] = Strawberry.startingvalue;
     return 0;
 }
 int Pineapplesreturn() {
-    int StartingPineapple = Fruit_inv[3];
-    int amountSold2; //Define variables used to track and adjust inventory values.
-    int remaining2;
-    int amountReplenished2;
+    Pineapple.startingvalue = Fruit_inv[3]; //Define variables used to track and adjust inventory values.
     if (answer2 == 'Y') {
         printf("Today is day %d of tracking Pinapple inventory.\n", count);
         count++; //Add to the daily counter
         printf(Starting_MSG3); //Give user initial value of Pineapples
         printf(Sold_MSG3); //Ask user for how many Pineapples were sold
-        scanf("%d", &amountSold2); //Scan for value of Pineapples sold
-        remaining2 = StartingPineapple - amountSold2; //Determine remaining Pineapples
-        printf("The remaining amount of Pineapples is %d\n", remaining2); //Display remaining Pineapple inventory
-        StartingPineapple = remaining2;
-        if (remaining2 < 25) { //If Pineapple inventory is below 25, ask to replenish inventory.
+        scanf("%d", &Pineapple.amountsold); //Scan for value of Pineapples sold
+        Pineapple.remaining = Pineapple.startingvalue - Pineapple.amountsold; //Determine remaining Pineapples
+        printf("Do you want to print the remaining amount of Pineapples? Y or N\n");
+        scanf("%s", &Pineapple.answer);
+        if (strcmp("Y", &Pineapple.answer) == 0) {
+            printf("The remaining amount of Pineapples is %d\n", Pineapple.remaining); //Display remaining Pineapples inventory
+        }
+        Pineapple.startingvalue = Pineapple.remaining;
+        if (Pineapple.remaining < 25) { //If Pineapples inventory is below 25, ask to replenish inventory.
             printf("You need to replenish the inventory.\n"); //Tell user they need to replenish inventory
             printf("Input how many Pineapples to replenish: \n"); //Ask user for how many Pineapples to replenish
-            scanf("%d", &amountReplenished2); //Scan for user replenish value
-            StartingPineapple = amountReplenished2 + remaining2; //Calculate the new starting value
-            printf("There are now %d Pineapples in stock\n", StartingPineapple); //List the new starting inventory for the next day
+            scanf("%d", &Pineapple.replenished); //Scan for user replenish value
+            Pineapple.startingvalue = Pineapple.replenished + Pineapple.remaining; //Calculate the new starting value
+            printf("There are now %d Pineapples in stock\n", Pineapple.startingvalue); //List the new starting inventory for the next day
         }
     }
     printf("Do you want to document tomorrows sales? Answer Y or N\n"); //Ask user if they want to restart the loop and document the next day's sales.
     scanf("%c", &answer1);
-    Fruit_inv[3] = StartingPineapple;
+    Fruit_inv[3] = Pineapple.startingvalue;
     return 0;
 }
 int Blueberriesreturn() {
-    int StartingBlueberry = Fruit_inv[4];
-    int amountSold2; //Define variables used to track and adjust inventory values.
-    int remaining2;
-    int amountReplenished2;
+    Blueberry.startingvalue = Fruit_inv[4]; //Define variables used to track and adjust inventory values.
     if (answer2 == 'Y') {
         printf("Today is day %d of tracking Blueberry inventory.\n", count);
         count++; //Add to the daily counter
         printf(Starting_MSG4); //Give user initial value of Blueberries
         printf(Sold_MSG4); //Ask user for how many Blueberries were sold
-        scanf("%d", &amountSold2); //Scan for value of Blueberries sold
-        remaining2 = StartingBlueberry - amountSold2; //Determine remaining Blueberries
-        printf("The remaining amount of Blueberries is %d\n", remaining2); //Display remaining Blueberry inventory
-        StartingBlueberry = remaining2;
-        if (remaining2 < 25) { //If Blueberry inventory is below 25, ask to replenish inventory.
+        scanf("%d", &Blueberry.amountsold); //Scan for value of Blueberries sold
+        Blueberry.remaining = Blueberry.startingvalue - Blueberry.amountsold; //Determine remaining Blueberries
+        printf("Do you want to print the remaining amount of Blueberries? Y or N\n");
+        scanf("%s", &Blueberry.answer);
+        if (strcmp("Y", &Blueberry.answer) == 0) {
+            printf("The remaining amount of Blueberries is %d\n", Blueberry.remaining); //Display remaining Blueberries inventory
+        }
+        Blueberry.startingvalue = Blueberry.remaining;
+        if (Blueberry.remaining < 25) { //If Blueberries inventory is below 25, ask to replenish inventory.
             printf("You need to replenish the inventory.\n"); //Tell user they need to replenish inventory
             printf("Input how many Blueberries to replenish: \n"); //Ask user for how many Blueberries to replenish
-            scanf("%d", &amountReplenished2); //Scan for user replenish value
-            StartingBlueberry = amountReplenished2 + remaining2; //Calculate the new starting value
-            printf("There are now %d Blueberries in stock\n", StartingBlueberry); //List the new starting inventory for the next day
+            scanf("%d", &Blueberry.replenished); //Scan for user replenish value
+            Blueberry.startingvalue = Blueberry.replenished + Blueberry.remaining; //Calculate the new starting value
+            printf("There are now %d Blueberries in stock\n", Blueberry.startingvalue); //List the new starting inventory for the next day
         }
     }
     printf("Do you want to document tomorrows sales? Answer Y or N\n"); //Ask user if they want to restart the loop and document the next day's sales.
     scanf("%c", &answer1);
-    Fruit_inv[4] = StartingBlueberry;
+    Fruit_inv[4] = Blueberry.startingvalue;
     return 0;
 }
