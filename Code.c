@@ -1,16 +1,18 @@
 /*This program will go ahead and track the inventory that a store has of watermelons.
 It will utilize loops to constantly account for the inventory value*/
-
 #include <stdio.h> //Include Macros
 #include <stdlib.h>
 #include <string.h>
 #include "Inv.h"
+
 int count = 1;
 char answer;
 char answer1;
 char answer2;
 char Fruits[5][15] = { "Watermelons", "Kiwis", "Strawberries", "Pineapples", "Blueberries" };
-int Fruit_inv[5] = { 100, 200, 400, 250, 400 };
+#define bzero(b,len) (memset((b), '\0', (len)), (void) 0)
+int Fruit_inv[5];
+
 struct Fruits { //Create the Structure for each fruit and the associated variables
     int startingvalue;
     char answer;
@@ -30,14 +32,73 @@ struct Fruits Strawberry;
 struct Fruits Pineapple;
 struct Fruits Blueberry;
 
-int main() //Define function
+int main(int argc, char* argv[]) //Define function
 {
     //Initialize and define the starting variables
+      // Initializing the file pointer 
+    FILE* fs;
+
+    char ch, buffer[64];
+    int i = 0, j = 0;
+
+    // Openning the file with file handler as fs 
+    fs = fopen("StartingValues.txt", "r+");
+
+    // Read the file unless the file encounters an EOF 
+    while (1) {
+        // Reads the character where the seeker is currently 
+        ch = fgetc(fs);
+
+        // If EOF is encountered then break out of the while loop 
+        if (ch == EOF) {
+            break;
+        }
+
+        // If the delimiter is encounterd(which can be 
+        // anything according to your wish) then skip the character 
+        // and store the last read array of characters in 
+        // an integer array 
+        else if (ch == ',') {
+
+            // Converting the content of the buffer into 
+            // an array position 
+            Fruit_inv[j] = atoi(buffer);
+
+            // Increamenting the array position 
+            j++;
+
+            // Clearing the buffer, this function takes two 
+            // arguments, one is a character pointer and  
+            // the other one is the size of the character array 
+            bzero(buffer, 64);
+
+            // clearing the counter which counts the number 
+            // of character in each number used for reading 
+            // into the buffer. 
+            i = 0;
+
+            // then continue 
+            continue;
+        }
+        else {
+
+            // reads the current character in the buffer 
+            buffer[i] = ch;
+
+            // increamenting the counter so that the next 
+            // character is read in the next position in  
+            // the array of buffer 
+            i++;
+        }
+        Fruit_inv[5] = 0;
+    }
     char* w = Fruits[0];
     char* k = Fruits[1];
     char* s = Fruits[2];
     char* p = Fruits[3];
     char* b = Fruits[4];
+    char User[15];
+    char Pass[15];
 
     printf("Do you want to use the system. Answer with Y or N\n"); //Ask user if they want to use the system
     scanf("%c", &answer1); //Scan for answer
@@ -45,6 +106,19 @@ int main() //Define function
         if (answer1 != 'Y') { //Determine if answer is Y
             break;
         }
+        printf("Input your Username\n");
+        scanf("%s", &User);
+        if (strcmp("Kevin.Wooden", User) != 0) {
+            printf("Wrong Username, restart the program\n");
+            break;
+        }
+        printf("Input your Password\n");
+        scanf("%s", &Pass);
+        if (strcmp("PassTest", Pass) != 0) {
+            printf("Wrong Username, restart the program");
+            break;
+        }
+        printf("Welcome Authorized User.\n");
         printf("What inventory do you want to track? Watermelons, Kiwis, Strawberries, Pineapples, or Blueberries?\n"); //Ask user what inventory the user wants to track.
         char test[15];
         scanf("%s", test); //Depending upon the users answer will initiate the respective inventory management item.
@@ -79,8 +153,21 @@ int main() //Define function
         }
     } while (answer1 == 'Y'); //Condition for do-while loop
 
-    return 0; //End of function
+    // printing out all the elements that are stored in the 
+    // array of integers 
+    if (strcmp("Kevin.Wooden", User) && strcmp("PassTest", Pass) == 0) {
+        for (i = 0; i < j; i++) {
+            printf("%s: %d in stock\n", Fruits[i], Fruit_inv[i]);
+        }
+    }
+    fclose(fs);
+    fs = fopen("StartingValues.txt", "w+");
+    fprintf(fs, "%d,%d,%d,%d,%d,%d", Fruit_inv[0], Fruit_inv[1], Fruit_inv[2], Fruit_inv[3], Fruit_inv[4], Fruit_inv[5]);
+    fclose(fs);
+
+    return 0;
 }
+
 
 
 int Watermelonsreturn() {
